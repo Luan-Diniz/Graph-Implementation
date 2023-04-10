@@ -1,7 +1,7 @@
 from grafo import Grafo
 from test_grafo import TesteGrafo
 
-grafeto = Grafo("grafo.txt")
-teste_grafo = TesteGrafo(grafeto)
+grafo = Grafo("grafo.txt")
+teste_grafo = TesteGrafo(grafo)
 
 teste_grafo.realizar_todos_testes()

@@ -37,22 +37,14 @@ class Grafo:
         return vizinhos
 
     def haAresta(self, u: int, v: int) -> bool:
-        if (u < v):
-            temp = u
-            u = v
-            v = temp
-        
+        u, v = self.__ordernar_vertices(u, v)
         haAresta = False
         if self.__matriz[u-1][v-1] > 0:
             haAresta = True
         return haAresta
 
     def peso(self, u: int, v: int) -> float:
-        if (u < v):
-            temp = u
-            u = v
-            v = temp
-        
+        u, v = self.__ordernar_vertices(u, v)
         if self.__matriz[u-1][v-1] > 0:
                 peso = self.__matriz[u-1][v-1]
         else:
@@ -74,10 +66,7 @@ class Grafo:
             else:
                 u = self.__get_indice(linha[0])
                 v = self.__get_indice(linha[1])
-                if (u < v):
-                    temp = u
-                    u = v
-                    v = temp
+                u, v = self.__ordernar_vertices(u, v)
                 self.__matriz[u-1][v-1] = int(linha[2])
                 self.__quantidade_arestas += 1
             
@@ -93,3 +82,9 @@ class Grafo:
     def imprimir_matriz(self) -> None:
         for i in range(self.__quantidade_vertices):
             print(self.__matriz[i])
+
+    def __ordernar_vertices(self, u: int, v: int) -> tuple:
+        if (u < v):
+            return(v, u)
+        else:
+            return(u, v)
