@@ -1,8 +1,11 @@
-*vertices 3
+*vertices 4
 1 a
 2 b
 3 c
+4 d
 *edges
 a b 1
-a c 1
-b c 1
+a c 2
+b c 3
+d a 10
+d c 2

@@ -72,9 +72,13 @@ class Grafo:
             elif lendo_vertices:
                 self.__rotulos_vertices.append(linha[1])
             else:
-                origem = self.__get_indice(linha[0]) - 1
-                destino = self.__get_indice(linha[1]) - 1
-                self.__matriz[destino][origem] = int(linha[2])
+                u = self.__get_indice(linha[0])
+                v = self.__get_indice(linha[1])
+                if (u < v):
+                    temp = u
+                    u = v
+                    v = temp
+                self.__matriz[u-1][v-1] = int(linha[2])
                 self.__quantidade_arestas += 1
             
     def __inicializar_matriz(self) -> None:
