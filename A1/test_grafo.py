@@ -59,3 +59,14 @@ class TesteGrafo:
         self.haAresta()
         print()
         self.peso()
+
+if __name__ == "__main__":
+    import sys
+    
+    quantidade_args = len(sys.argv)
+    if quantidade_args != 2:
+        print("1 argumento necessário: nome_arquivo")
+    else:
+        grafo = Grafo(sys.argv[1])
+        testeGrafo = TesteGrafo(grafo)
+        testeGrafo.realizar_todos_testes()
