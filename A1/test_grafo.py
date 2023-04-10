@@ -54,6 +54,8 @@ class TesteGrafo:
         print()
         self.rotulo()
         print()
+        self.vizinhos()
+        print()
         self.haAresta()
         print()
         self.peso()

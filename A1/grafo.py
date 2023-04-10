@@ -30,10 +30,10 @@ class Grafo:
         vizinhos = []
         for j in range(v-1):
             if self.__matriz[v-1][j] > 0:
-                vizinhos.append(self.rotulo(j+1))
+                vizinhos.append(j+1)
         for i in range(v, self.__quantidade_vertices):
             if self.__matriz[i][v-1]:
-                vizinhos.append(self.rotulo(i+1))
+                vizinhos.append(i+1)
         return vizinhos
 
     def haAresta(self, u: int, v: int) -> bool:
