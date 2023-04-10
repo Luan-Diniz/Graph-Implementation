@@ -1,5 +1,3 @@
-import aresta
-
 class Grafo:
     def __init__(self):
         self.__quantidade_vertices = 0
