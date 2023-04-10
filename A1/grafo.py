@@ -1,29 +1,63 @@
 class Grafo:
-    def __init__(self):
+    def __init__(self, nome_arquivo: str) -> None:
         self.__quantidade_vertices = 0
+        self.__quantidade_arestas = 0
         self.__matriz = None
         self.__rotulos_vertices = []
         
-    def qtdVertices():
-        pass
+        self.lerArquivo(nome_arquivo)
+        
+    def qtdVertices(self) -> int:
+        return self.__quantidade_vertices
 
-    def qtdArestas():
-        pass
+    def qtdArestas(self) -> int:
+        return self.__quantidade_arestas
     
-    def grau():
-        pass
+    def grau(self, v: int) -> int:
+        grau = 0
+        for j in range(v-1):
+            if self.__matriz[v-1][j] > 0:
+                grau += 1
+        for i in range(v, self.__quantidade_vertices):
+            if self.__matriz[i][v-1]:
+                grau += 1
+        return grau
 
-    def rotulo():
-        pass
+    def rotulo(self, v: int) -> str:
+        return self.__rotulos_vertices[v-1]
 
-    def vizinhos():
-        pass
+    def vizinhos(self, v: int) -> list:
+        vizinhos = []
+        for j in range(v-1):
+            if self.__matriz[v-1][j] > 0:
+                vizinhos.append(self.rotulo(j+1))
+        for i in range(v, self.__quantidade_vertices):
+            if self.__matriz[i][v-1]:
+                vizinhos.append(self.rotulo(i+1))
+        return vizinhos
 
-    def haAresta():
-        pass
+    def haAresta(self, u: int, v: int) -> bool:
+        if (u < v):
+            temp = u
+            u = v
+            v = temp
+        
+        haAresta = False
+        if self.__matriz[u-1][v-1] > 0:
+            haAresta = True
+        return haAresta
 
-    def peso():
-        pass
+    def peso(self, u: int, v: int) -> float:
+        if (u < v):
+            temp = u
+            u = v
+            v = temp
+        
+        if self.__matriz[u-1][v-1] > 0:
+                peso = self.__matriz[u-1][v-1]
+        else:
+            peso = float("inf")
+        return peso
 
     def lerArquivo(self, nome_arquivo: str) -> None:
         arquivo = open(nome_arquivo, "r")
@@ -41,6 +75,7 @@ class Grafo:
                 origem = self.__get_indice(linha[0]) - 1
                 destino = self.__get_indice(linha[1]) - 1
                 self.__matriz[destino][origem] = int(linha[2])
+                self.__quantidade_arestas += 1
             
     def __inicializar_matriz(self) -> None:
         self.__matriz = [[0 for j in range(self.__quantidade_vertices)] for i in range(self.__quantidade_vertices)]
@@ -54,9 +89,3 @@ class Grafo:
     def imprimir_matriz(self) -> None:
         for i in range(self.__quantidade_vertices):
             print(self.__matriz[i])
-
-
-grafeto = Grafo()
-grafeto.lerArquivo("grafo.txt")
-grafeto.imprimir_matriz()
-        
