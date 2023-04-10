@@ -36,3 +36,13 @@ class Busca:
                     fila.append(v)
         
         return (distancia, antecessor)
+
+
+if __name__ == "__main__":
+    import sys
+    
+    quantidade_args = len(sys.argv)
+    if quantidade_args != 3:
+        print("2 argumentos necessários: nome_arquivo e indice_vertice")
+    else:
+        Busca.buscar(sys.argv[1], int(sys.argv[2]))
