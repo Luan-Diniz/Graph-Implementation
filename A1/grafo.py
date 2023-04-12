@@ -95,8 +95,8 @@ class Grafo:
     def getArestas(self) -> list:
         if self.__lista_arestas == []:
             num_vertices = self.qtdVertices()
-            for i in range(num_vertices + 1):
-                for j in range(num_vertices + 1):
+            for i in range(1,num_vertices + 1):
+                for j in range(1,num_vertices + 1):
                     if self.haAresta(i,j):
                         self.__lista_arestas.append((i,j))
 
