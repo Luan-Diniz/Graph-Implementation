@@ -4,6 +4,7 @@ class Grafo:
         self.__quantidade_arestas = 0
         self.__matriz = None
         self.__rotulos_vertices = []
+        self.__lista_arestas = []
         
         self.lerArquivo(nome_arquivo)
         
@@ -88,3 +89,18 @@ class Grafo:
             return(v, u)
         else:
             return(u, v)
+        
+
+
+    def getArestas(self) -> list:
+        if self.__lista_arestas == []:
+            for i in range(self.qtdVertices()):
+                for j in range(self.qtdVertices()):
+                    if self.haAresta(i,j):
+                        self.__lista_arestas.append((i,j))
+                    if len(self.__lista_arestas) == self.qtdArestas():
+                        return self.__lista_arestas
+
+        return self.__lista_arestas
+        
+
