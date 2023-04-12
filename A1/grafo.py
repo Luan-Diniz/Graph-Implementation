@@ -102,4 +102,11 @@ class Grafo:
 
         return self.__lista_arestas
         
+    def getArestasNaoDirigido(self) -> list:
+        velhas_arestas = self.getArestas()
+        arestas = []
+        for i in velhas_arestas:
+            arestas.append(self.__ordernar_vertices(i[0],i[1]))
+
+        return list(set(arestas))
 
