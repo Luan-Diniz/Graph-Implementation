@@ -4,9 +4,12 @@ class Hierholzer:
 
     @staticmethod
     def encontrar_ciclo_euleriano(grafo: Grafo) :
+        for i in range(grafo.qtdVertices()):
+            if (len(grafo.vizinhos(i + 1)) % 2) != 0 :
+                print("0")
+                return
         conhecidas = [False for i in range(grafo.qtdArestas())]
         resposta, ciclo = Hierholzer.__encontrar_subciclo_euleriano(grafo, 1, conhecidas)
-
         if (resposta == False) :
             print("0")
             return
