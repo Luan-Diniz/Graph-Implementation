@@ -23,8 +23,9 @@ class Hierholzer:
     def __encontrar_subciclo_euleriano(grafo: Grafo, v: int, conhecidas: list) -> tuple:
         ciclo = [v]
         t = v
-        cont = 0
         while True:
+            cont1 = 0
+            cont2 = 0
             for i in range(grafo.qtdArestas()) :
                 if (conhecidas[i] == False) :
                     if (grafo.getArestasNaoDirigido()[i][0] == t) :
@@ -35,19 +36,22 @@ class Hierholzer:
                         t = grafo.getArestasNaoDirigido()[i][0]
                         conhecidas[i] = True
                         ciclo.append(t)
+                    else:
+                        cont2 += 1
                 else:
-                    cont += 1
-            if (cont == 2*grafo.qtdArestas()) :
+                    cont1 += 1
+            if ((cont1 + cont2) == grafo.qtdArestas()) :
                 return (False, None)
             if (t == v) :
                 break
-        for x in range(len(ciclo)) :
-            for i in range(grafo.qtdArestas()) :
-                if (conhecidas[i] == False and (grafo.getArestasNaoDirigido()[i][0] == ciclo[x] or grafo.getArestasNaoDirigido()[i][1] == ciclo[x])) :
-                    resposta, ciclo2 = Hierholzer.__encontrar_subciclo_euleriano(grafo, x + 1, conhecidas)
-                    if (resposta == False) :
-                        return (False, None)
-                    ciclo[x:x] = ciclo2
+        for i in range(grafo.qtdArestas()) :
+            if (conhecidas[i] == False) :
+                for x in range(len(ciclo)) :
+                    if (grafo.getArestasNaoDirigido()[i][0] == ciclo[x] or grafo.getArestasNaoDirigido()[i][1] == ciclo[x]) :
+                        resposta, ciclo2 = Hierholzer.__encontrar_subciclo_euleriano(grafo, ciclo[x], conhecidas)
+                        if (resposta == False) :
+                            return (False, None)
+                        ciclo[x:x] = ciclo2
         return (True, ciclo)
 
 
