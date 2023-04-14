@@ -19,7 +19,7 @@ class Hierholzer:
                     print("0")
                     return
             print("1")
-            print(ciclo)
+            print(str(ciclo).replace(" ","").replace("[","").replace("]",""))
             return
 
     @staticmethod
@@ -59,9 +59,10 @@ class Hierholzer:
 
 if __name__ == "__main__":
     import sys
+
     quantidade_args = len(sys.argv)
     if quantidade_args != 2:
-        print("1 argumento necessário: grafo")
+        print("1 argumento necessário: nome_arquivo")
     else:
         grafo = Grafo(sys.argv[1])
         Hierholzer.encontrar_ciclo_euleriano(grafo)
