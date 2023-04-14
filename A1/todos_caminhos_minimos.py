@@ -22,4 +22,4 @@ if __name__ == "__main__":
     if quantidade_args != 3:
         print("2 argumentos necessários: nome_arquivo e indice_vertice")
     else:
-        CaminhoMinimo.buscar(sys.argv[1], int(sys.argv[2]))
+        TodosCaminhosMinimos.buscar(sys.argv[1], int(sys.argv[2]))

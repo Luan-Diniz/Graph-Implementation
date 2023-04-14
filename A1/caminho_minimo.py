@@ -10,10 +10,7 @@ class CaminhoMinimo:
         else:
 
             for i in range(1, grafo.qtdVertices() + 1):
-
-                #BellmanFord parece funcionar, mas getPath está em loop infinito.
-                print(f"{i}: {CaminhoMinimo.getPath(antecessor, (s,i))}; d={distancia[i-1]}")  
-                pass
+                print(f"{i}: {CaminhoMinimo.getPath(antecessor, (s,i))}; d={distancia[i-1]}")             
 
 
     @staticmethod
