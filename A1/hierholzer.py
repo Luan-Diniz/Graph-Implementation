@@ -52,9 +52,8 @@ class Hierholzer:
                 for x in range(len(ciclo)) :
                     if (grafo.getArestasNaoDirigido()[i][0] == ciclo[x] or grafo.getArestasNaoDirigido()[i][1] == ciclo[x]) :
                         resposta, ciclo2 = Hierholzer.__encontrar_subciclo_euleriano(grafo, ciclo[x], conhecidas)
-                        if (resposta == False) :
-                            return (False, None)
-                        ciclo[x:x] = ciclo2
+                        if (resposta == True) :
+                            ciclo[x:x + 1] = ciclo2
         return (True, ciclo)
 
 
