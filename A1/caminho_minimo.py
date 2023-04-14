@@ -36,7 +36,7 @@ class CaminhoMinimo:
         return (True, distancia, antecessor)
     
 
-    #Problema método: execução infinita.
+
     @staticmethod
     def getPath(antecessor: list, vertices: tuple) -> str:
         inicio, destino = vertices
