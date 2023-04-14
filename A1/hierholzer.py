@@ -52,15 +52,13 @@ class Hierholzer:
                 for x in range(len(ciclo)) :
                     if (grafo.getArestasNaoDirigido()[i][0] == ciclo[x] or grafo.getArestasNaoDirigido()[i][1] == ciclo[x]) :
                         resposta, ciclo2 = Hierholzer.__encontrar_subciclo_euleriano(grafo, ciclo[x], conhecidas)
-                        if (resposta == False) :
-                            return (False, None)
-                        ciclo[x:x] = ciclo2
+                        if (resposta == True) :
+                            ciclo[x:x + 1] = ciclo2
         return (True, ciclo)
 
 
 if __name__ == "__main__":
     import sys
-
     quantidade_args = len(sys.argv)
     if quantidade_args != 2:
         print("1 argumento necessário: grafo")
