@@ -65,10 +65,10 @@ class Grafo:
             elif lendo_vertices:
                 self.__rotulos_vertices.append(linha[1])
             else:
-                u = self.__get_indice(linha[0])
-                v = self.__get_indice(linha[1])
+                u = int(linha[0])
+                v = int(linha[1])
                 u, v = self.__ordernar_vertices(u, v)
-                self.__matriz[u-1][v-1] = int(linha[2])
+                self.__matriz[u-1][v-1] = float(linha[2])
                 self.__quantidade_arestas += 1
             
     def __inicializar_matriz(self) -> None:
@@ -90,8 +90,6 @@ class Grafo:
         else:
             return(u, v)
         
-
-
     def getArestas(self) -> list:
         if self.__lista_arestas == []:
             num_vertices = self.qtdVertices()

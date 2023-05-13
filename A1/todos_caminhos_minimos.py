@@ -1,4 +1,5 @@
 from grafo import Grafo
+from util import Util
 
 class TodosCaminhosMinimos:
     @staticmethod
@@ -11,9 +12,9 @@ class TodosCaminhosMinimos:
              print(f"{i+1}:", end = '')
              for j in range(0, quantidade_vertices):
                 if j == quantidade_vertices - 1:
-                    print(f"{matriz_resultado[i][j]}", end = "")
+                    print(f"{Util.convert_float(matriz_resultado[i][j])}", end = "")
                 else:
-                    print(f"{matriz_resultado[i][j]},", end = "")
+                    print(f"{Util.convert_float(matriz_resultado[i][j])},", end = "")
              print()
         
 

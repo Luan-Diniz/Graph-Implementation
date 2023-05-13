@@ -1,4 +1,5 @@
 from grafo import Grafo
+from util import Util
 
 class CaminhoMinimo:
     @staticmethod
@@ -10,8 +11,7 @@ class CaminhoMinimo:
         else:
 
             for i in range(1, grafo.qtdVertices() + 1):
-                print(f"{i}: {CaminhoMinimo.getPath(antecessor, (s,i))}; d={distancia[i-1]}")             
-
+                print(f"{i}: {CaminhoMinimo.getPath(antecessor, (s,i))}; d={Util.convert_float(distancia[i-1])}")             
 
     @staticmethod
     def BellmanFord(grafo: Grafo, s: int) -> tuple:
@@ -35,8 +35,6 @@ class CaminhoMinimo:
         
         return (True, distancia, antecessor)
     
-
-
     @staticmethod
     def getPath(antecessor: list, vertices: tuple) -> str:
         inicio, destino = vertices
@@ -51,8 +49,6 @@ class CaminhoMinimo:
         
 
         return str(caminho).replace("[","").replace("]","").replace(" ","")
-
-
 
 if __name__ == "__main__":
     import sys

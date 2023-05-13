@@ -7,7 +7,7 @@ class Busca:
         grafo = Grafo(nome_arquivo)
         
         distancia, antecessor = Busca.__busca_largura(grafo, s)
-        for nivel in range(max(distancia) + 1):
+        for nivel in range(max([n for n in distancia if n != float("inf")]) + 1):
             saida_nivel = f"{nivel}: "
             for v in range(len(distancia)):
                 if distancia[v] == nivel:
