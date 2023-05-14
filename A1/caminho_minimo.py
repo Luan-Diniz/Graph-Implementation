@@ -20,18 +20,17 @@ class CaminhoMinimo:
 
         distancia[s - 1] = 0
 
-        for _ in range(1, grafo.qtdVertices() - 1):
-            for u,v in grafo.getArestas():
+        for _ in range(1, grafo.qtdVertices()):
+            for u,v in grafo.getArestasDuplicado():
                 #relaxamento
                 if distancia[v-1] > distancia[u-1] + grafo.peso(u,v):
                     distancia[v-1] = distancia[u-1] + grafo.peso(u,v)
                     antecessor[v-1] = u
 
         #verifica se ha ciclo negativo
-        for _ in range(1, grafo.qtdVertices() - 1):
-            for u,v in grafo.getArestas():
-                if distancia[v-1] > distancia[u-1] + grafo.peso(u,v):
-                    return (False,None,None)
+        for u,v in grafo.getArestasDuplicado():
+            if distancia[v-1] > distancia[u-1] + grafo.peso(u,v):
+                return (False,None,None)
         
         return (True, distancia, antecessor)
     

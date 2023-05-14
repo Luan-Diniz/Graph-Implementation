@@ -17,7 +17,6 @@ class TodosCaminhosMinimos:
                     print(f"{Util.convert_float(matriz_resultado[i][j])},", end = "")
              print()
         
-
     @staticmethod
     def FloydWarshall(grafo: Grafo) -> list:
         number_of_vertices = grafo.qtdVertices()
@@ -25,22 +24,16 @@ class TodosCaminhosMinimos:
         distance = [([float('inf') for j in range(number_of_vertices)]) for i in range(number_of_vertices)]   #Cria a matriz de distancias
         for i in range(0, number_of_vertices):
             distance[i][i] = 0
-        for u,v in grafo.getArestas():
+        for u,v in grafo.getArestasDuplicado():
             distance[u-1][v-1] = grafo.peso(u,v)
         
-        for k in range(1, number_of_vertices):
-            for j in range(1, number_of_vertices):
-                for i in range(1, number_of_vertices):
+        for k in range(1, number_of_vertices + 1):
+            for j in range(1, number_of_vertices + 1):
+                for i in range(1, number_of_vertices + 1):
                     if distance[i-1][j-1] > distance[i-1][k-1] + distance[k-1][j-1]:
                         distance[i-1][j-1] = distance[i-1][k-1] + distance[k-1][j-1]
         
         return distance
-
-
-
-
-
-
 
 if __name__ == "__main__":
     import sys

@@ -1,61 +1,81 @@
 from grafo import Grafo
 
 class Hierholzer:
-
+    
     @staticmethod
-    def encontrar_ciclo_euleriano(grafo: Grafo) :
-        for i in range(grafo.qtdVertices()):
-            if (len(grafo.vizinhos(i + 1)) % 2) != 0 :
-                print("0")
-                return
-        conhecidas = [False for i in range(grafo.qtdArestas())]
-        resposta, ciclo = Hierholzer.__encontrar_subciclo_euleriano(grafo, 1, conhecidas)
-        if (resposta == False) :
+    def encontrar_ciclo_euleriano(grafo: Grafo):
+        resposta, ciclo = Hierholzer.__encontrar_ciclo_euleriano(grafo)
+        if (resposta == False):
             print("0")
-            return
         else:
-            for aresta in conhecidas:
-                if (aresta == False) :
-                    print("0")
-                    return
             print("1")
             print(str(ciclo).replace(" ","").replace("[","").replace("]",""))
-            return
+
+    @staticmethod
+    def __encontrar_ciclo_euleriano(grafo: Grafo):
+        conhecidas = {}
+        arestas = grafo.getArestas()
+        for aresta in arestas:
+            conhecidas[aresta] = False
+            
+        # Seleciona um v conectado a uma aresta
+        for v in range(1, grafo.qtdVertices() + 1):
+            if grafo.grau(v) > 0:
+                break
+        
+        resposta, ciclo = Hierholzer.__encontrar_subciclo_euleriano(grafo, v, conhecidas)
+        if (resposta == False) :
+            return (False, None)
+        
+        for aresta in arestas:
+            if (conhecidas[aresta] == False) :
+                return (False, None)
+                
+        return (True, ciclo)
 
     @staticmethod
     def __encontrar_subciclo_euleriano(grafo: Grafo, v: int, conhecidas: list) -> tuple:
         ciclo = [v]
         t = v
         while True:
-            cont1 = 0
-            cont2 = 0
-            for i in range(grafo.qtdArestas()) :
-                if (conhecidas[i] == False) :
-                    if (grafo.getArestasNaoDirigido()[i][0] == t) :
-                        t = grafo.getArestasNaoDirigido()[i][1]
-                        conhecidas[i] = True
-                        ciclo.append(t)
-                    elif (grafo.getArestasNaoDirigido()[i][1] == t) :
-                        t = grafo.getArestasNaoDirigido()[i][0]
-                        conhecidas[i] = True
-                        ciclo.append(t)
-                    else:
-                        cont2 += 1
-                else:
-                    cont1 += 1
-            if ((cont1 + cont2) == grafo.qtdArestas()) :
+            v, u = Hierholzer.__selecionar_aresta_nao_visitada(grafo, conhecidas, v)
+            if (v == -1 or u == -1):
                 return (False, None)
-            if (t == v) :
+            else:
+                conhecidas[grafo.ordernar_vertices(v, u)] = True
+                v = u
+                ciclo.append(v)
+            
+            if (t == v):
                 break
-        for i in range(grafo.qtdArestas()) :
-            if (conhecidas[i] == False) :
-                for x in range(len(ciclo)) :
-                    if (grafo.getArestasNaoDirigido()[i][0] == ciclo[x] or grafo.getArestasNaoDirigido()[i][1] == ciclo[x]) :
-                        resposta, ciclo2 = Hierholzer.__encontrar_subciclo_euleriano(grafo, ciclo[x], conhecidas)
-                        if (resposta == True) :
-                            ciclo[x:x + 1] = ciclo2
+            
+        for x in ciclo:
+            u, w = Hierholzer.__selecionar_aresta_nao_visitada(grafo, conhecidas, x)
+            if (u == -1 or w == -1):
+                continue
+            
+            r, subciclo = Hierholzer.__encontrar_subciclo_euleriano(grafo, x, conhecidas)
+            if r == False:
+                return (False, None)
+            Hierholzer.__juntar_ciclos(ciclo, subciclo)
+                
         return (True, ciclo)
-
+    
+    @staticmethod
+    def __selecionar_aresta_nao_visitada(grafo:Grafo, conhecidas: dict, v: int) -> tuple:
+        vizinhanca = grafo.vizinhos(v)
+        for u in vizinhanca:
+            if not conhecidas[grafo.ordernar_vertices(u, v)]:
+                return (v, u)
+        return (-1, -1)
+    
+    @staticmethod
+    def __juntar_ciclos(ciclo: list, subciclo: list):
+        x = subciclo[0]
+        for i in range(len(ciclo)):
+            if ciclo[i] == x:
+                ciclo[i:i + 1] = subciclo
+                break
 
 if __name__ == "__main__":
     import sys
