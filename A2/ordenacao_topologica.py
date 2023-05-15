@@ -5,24 +5,24 @@ class OrdenacaoTopologica:
     def dfs_para_ot(nome_arquivo: str):
         G = GrafoDirigido(nome_arquivo)
 
-        C = {}
-        for vertice in range(1, G.qtd_vertices() + 1):
-            C[vertice] = False
+        C = []
+        for v in range(G.qtd_vertices()):
+            C.append(False)
 
-        T = {}
-        for vertice in range(1, G.qtd_vertices() + 1):
-            T[vertice] = float('inf')
+        T = []
+        for v in range(G.qtd_vertices()):
+            T.append(float('inf'))
 
-        F = {}
-        for vertice in range(1, G.qtd_vertices() + 1):
-            F[vertice] = float('inf')
+        F = []
+        for v in range(G.qtd_vertices()):
+            F.append(float('inf'))
         
         tempo = 0
         O = []
 
-        for u in range(1, G.qtd_vertices() + 1):
+        for u in range(G.qtd_vertices()):
             if (C[u] == False):
-                OrdenacaoTopologica.__dfs_visit_ot(G, u, C, T, F, tempo, O)
+                OrdenacaoTopologica.__dfs_visit_ot(G, u + 1, C, T, F, tempo, O)
         
         i = 0
         for vertice in O:
@@ -33,17 +33,17 @@ class OrdenacaoTopologica:
                 print(G.rotulo(vertice), end = ".")
 
     @staticmethod
-    def __dfs_visit_ot(G: GrafoDirigido, v: int, C: dict, T: dict, F: dict, tempo: int, O: list):
-        C[v] = True
+    def __dfs_visit_ot(G: GrafoDirigido, v: int, C: list, T: list, F: list, tempo: int, O: list):
+        C[v - 1] = True
         tempo += 1
-        T[v] = tempo
+        T[v - 1] = tempo
 
         for u in G.vizinhos_antecessores(v):
-            if (C[u] == False):
+            if (C[u - 1] == False):
                 OrdenacaoTopologica.__dfs_visit_ot(G, u, C, T, F, tempo, O)
         
         tempo += 1
-        F[v] = tempo
+        F[v - 1] = tempo
         O.append(v)
 
 if __name__ == "__main__":
