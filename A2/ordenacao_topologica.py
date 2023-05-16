@@ -5,17 +5,11 @@ class OrdenacaoTopologica:
     def dfs_para_ot(nome_arquivo: str):
         G = GrafoDirigido(nome_arquivo)
 
-        C = []
-        for v in range(G.qtd_vertices()):
-            C.append(False)
+        C = [False for v in range(G.qtd_vertices())]
 
-        T = []
-        for v in range(G.qtd_vertices()):
-            T.append(float('inf'))
+        T = [float('inf') for v in range(G.qtd_vertices())]
 
-        F = []
-        for v in range(G.qtd_vertices()):
-            F.append(float('inf'))
+        F = [float('inf') for v in range(G.qtd_vertices())]
         
         tempo = 0
         O = []

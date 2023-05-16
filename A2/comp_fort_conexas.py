@@ -7,11 +7,11 @@ class CompFortConexas:
 
         C, T, A, F = CompFortConexas.__dfs_para_cfc(G, False)
 
-        # Calcular Gt
+        Gt = G.criar_grafo_transposto()
 
         Ct, Tt, At, Ft = CompFortConexas.__dfs_para_cfc(Gt, True)
         
-        return At
+        print(At)
 
     @staticmethod
     def __dfs_para_cfc(G: GrafoDirigido, Alt = bool):
@@ -27,13 +27,12 @@ class CompFortConexas:
         tempo = 0
 
         if (Alt):
-            tmp = F.sort(reversed=True)
-            while(len(tmp)):
-                for u in range(G.qtd_vertices()):
-                    if F[u] == tmp[0]:
-                        if (C[u] == False):
-                            CompFortConexas.__dfs_visit_cfc(G, u + 1, C, T, A, F, tempo)
-                        tmp.pop(0)
+            tmp = sorted(F, reverse=True)
+            for u in range(G.qtd_vertices()):
+                if (F[u] == tmp[0]):
+                    if (C[u] == False):
+                        CompFortConexas.__dfs_visit_cfc(G, u + 1, C, T, A, F, tempo)
+                    tmp.pop(0)
         else:
             for u in range(G.qtd_vertices()):
                 if (C[u] == False):
@@ -49,8 +48,8 @@ class CompFortConexas:
 
         for u in G.vizinhos_antecessores(v):
             if (C[u - 1] == False):
-                A[u].append(v)
-                CompFortConexas.__dfs_visit_cfc(G, u + 1, C, T, A, F, tempo)
+                A[u - 1].append(v)
+                CompFortConexas.__dfs_visit_cfc(G, u, C, T, A, F, tempo)
         
         tempo += 1
         F[v - 1] = tempo
