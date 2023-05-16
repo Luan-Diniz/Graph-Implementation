@@ -28,11 +28,15 @@ class CompFortConexas:
 
         if (Alt):
             tmp = sorted(F, reverse=True)
-            for u in range(G.qtd_vertices()):
+            u = 0
+            while(u < G.qtd_vertices()):
                 if (F[u] == tmp[0]):
                     if (C[u] == False):
                         CompFortConexas.__dfs_visit_cfc(G, u + 1, C, T, A, F, tempo)
                     tmp.pop(0)
+                    u = 0
+                else:
+                    u += 1
         else:
             for u in range(G.qtd_vertices()):
                 if (C[u] == False):
