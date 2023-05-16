@@ -2,12 +2,15 @@ from grafo import Grafo
 
 class GrafoDirigido(Grafo):
     
-    def __init__(self, nome_arquivo: str) -> None:
+    def __init__(self, origem) -> None:
         super().__init__()
         self.__quantidade_arcos = 0
         self.__lista_arcos = []
         
-        self.ler_arquivo(nome_arquivo)
+        if type(origem) == str:
+            self.ler_arquivo(origem)
+        else:
+            self.__criar_grafo_transposto(origem)
         
     def qtd_arcos(self) -> int:
         return self.__quantidade_arcos
@@ -79,3 +82,20 @@ class GrafoDirigido(Grafo):
                 v = int(linha[1])
                 self._matriz[u-1][v-1] = float(linha[2])
                 self.__quantidade_arcos += 1
+                
+    def __criar_grafo_transposto(self, grafo: 'GrafoDirigido'):
+        self._quantidade_vertices = grafo.qtd_vertices()
+        self.__quantidade_arcos = grafo.qtd_arcos()
+        
+        for v in range(1, self._quantidade_vertices + 1):
+            self._rotulos_vertices.append(grafo.rotulo(v))
+          
+        matriz_original = grafo.get_matriz()
+        self._inicializar_matriz()
+        for i in range(self._quantidade_vertices):
+            for j in range(self._quantidade_vertices):
+                self._matriz[i][j] = matriz_original[j][i]
+                
+    def criar_grafo_transposto(self):
+        return GrafoDirigido(self)
+    

@@ -20,6 +20,9 @@ class Grafo(ABC):
                 return i + 1
         return -1
     
+    def get_matriz(self) -> list:
+        return [self._matriz[i].copy() for i in range(self._quantidade_vertices)]
+    
     def imprimir_matriz(self) -> None:
         for i in range(self._quantidade_vertices):
             print(self._matriz[i])
