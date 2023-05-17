@@ -45,7 +45,7 @@ class CompFortConexas:
         return (C, T, A, F)
 
     @staticmethod
-    def __dfs_visit_cfc(G: GrafoDirigido, v: int, C: list, T: list, A: dict, F: list, tempo: int):
+    def __dfs_visit_cfc(G: GrafoDirigido, v: int, C: list, T: list, A: list, F: list, tempo: int):
         C[v - 1] = True
         tempo += 1
         T[v - 1] = tempo
