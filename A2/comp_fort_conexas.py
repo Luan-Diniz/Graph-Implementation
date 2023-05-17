@@ -5,42 +5,43 @@ class CompFortConexas:
     def comp_fort_conexas(nome_arquivo: str):
         G = GrafoDirigido(nome_arquivo)
 
-        C, T, A, F = CompFortConexas.__dfs_para_cfc(G, False)
+        C, T, A, F = CompFortConexas.__dfs_para_cfc(G)
 
         Gt = G.criar_grafo_transposto()
 
-        Ct, Tt, At, Ft = CompFortConexas.__dfs_para_cfc(Gt, True)
+        Ct, Tt, At, Ft = CompFortConexas.__dfs_para_cfc(Gt, alterado=True)
         
         print(At)
-
+        
     @staticmethod
-    def __dfs_para_cfc(G: GrafoDirigido, Alt = bool):
+    def __dfs_para_cfc(G: GrafoDirigido, alterado: bool=False):
 
         C = [False for v in range(G.qtd_vertices())]
 
         T = [float('inf') for v in range(G.qtd_vertices())]
 
-        A = [[] for v in range(G.qtd_vertices())]
+        A = [None for v in range(G.qtd_vertices())]
 
         F = [float('inf') for v in range(G.qtd_vertices())]
         
         tempo = 0
 
-        if (Alt):
-            tmp = sorted(F, reverse=True)
-            u = 0
-            while(u < G.qtd_vertices()):
-                if (F[u] == tmp[0]):
-                    if (C[u] == False):
-                        CompFortConexas.__dfs_visit_cfc(G, u + 1, C, T, A, F, tempo)
-                    tmp.pop(0)
-                    u = 0
-                else:
-                    u += 1
+        if (alterado):
+            tempo_vertice = []
+            for v in range(1, G.qtd_vertices() + 1):
+                tempo_vertice.append((F[v-1], v))
+            tempo_vertice.sort()
+            
+            for tempo, u in tempo_vertice:
+                if C[u-1] == False:
+                    CompFortConexas.__dfs_visit_cfc(G, u, C, T, A, F, tempo)
+                    tempo = F[u-1] + 1
+
         else:
-            for u in range(G.qtd_vertices()):
-                if (C[u] == False):
-                    CompFortConexas.__dfs_visit_cfc(G, u + 1, C, T, A, F, tempo)
+            for u in range(1, G.qtd_vertices() + 1):
+                if (C[u-1] == False):
+                    CompFortConexas.__dfs_visit_cfc(G, u, C, T, A, F, tempo)
+                    tempo = F[u-1] + 1
         
         return (C, T, A, F)
 
@@ -50,9 +51,9 @@ class CompFortConexas:
         tempo += 1
         T[v - 1] = tempo
 
-        for u in G.vizinhos_antecessores(v):
+        for u in G.vizinhos_sucessores(v):
             if (C[u - 1] == False):
-                A[u - 1].append(v)
+                A[u - 1] = v
                 CompFortConexas.__dfs_visit_cfc(G, u, C, T, A, F, tempo)
         
         tempo += 1
