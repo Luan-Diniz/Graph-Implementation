@@ -9,12 +9,12 @@ class CompFortConexas:
 
         Gt = G.criar_grafo_transposto()
 
-        Ct, Tt, At, Ft = CompFortConexas.__dfs_para_cfc(Gt, alterado=True)
+        Ct, Tt, At, Ft = CompFortConexas.__dfs_para_cfc(Gt, alterado=True, F_anterior=F)
         
         print(At)
         
     @staticmethod
-    def __dfs_para_cfc(G: GrafoDirigido, alterado: bool=False):
+    def __dfs_para_cfc(G: GrafoDirigido, alterado: bool=False, F_anterior: list= None):
 
         C = [False for v in range(G.qtd_vertices())]
 
@@ -29,7 +29,7 @@ class CompFortConexas:
         if (alterado):
             tempo_vertice = []
             for v in range(1, G.qtd_vertices() + 1):
-                tempo_vertice.append((F[v-1], v))
+                tempo_vertice.append((F_anterior[v-1], v))
             tempo_vertice.sort()
             
             for tempo, u in tempo_vertice:
