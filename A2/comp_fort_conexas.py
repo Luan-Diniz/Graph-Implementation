@@ -30,7 +30,7 @@ class CompFortConexas:
             tempo_vertice = []
             for v in range(1, G.qtd_vertices() + 1):
                 tempo_vertice.append((F_anterior[v-1], v))
-            tempo_vertice.sort()
+            tempo_vertice.sort(reverse = True)
             
             for t, u in tempo_vertice:
                 if C[u-1] == False:
