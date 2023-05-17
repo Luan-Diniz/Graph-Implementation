@@ -76,7 +76,7 @@ class GrafoDirigido(Grafo):
                 lendo_vertices = False
                 self._inicializar_matriz()
             elif lendo_vertices:
-                self._rotulos_vertices.append(linha[1])
+                self._rotulos_vertices.append(" ".join(linha[1:]))
             else:
                 u = int(linha[0])
                 v = int(linha[1])
