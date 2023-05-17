@@ -32,16 +32,16 @@ class CompFortConexas:
                 tempo_vertice.append((F_anterior[v-1], v))
             tempo_vertice.sort()
             
-            for tempo, u in tempo_vertice:
+            for t, u in tempo_vertice:
                 if C[u-1] == False:
                     CompFortConexas.__dfs_visit_cfc(G, u, C, T, A, F, tempo)
-                    tempo = F[u-1] + 1
+                    tempo = F[u-1]
 
         else:
             for u in range(1, G.qtd_vertices() + 1):
                 if (C[u-1] == False):
                     CompFortConexas.__dfs_visit_cfc(G, u, C, T, A, F, tempo)
-                    tempo = F[u-1] + 1
+                    tempo = F[u-1]
         
         return (C, T, A, F)
 
@@ -55,6 +55,7 @@ class CompFortConexas:
             if (C[u - 1] == False):
                 A[u - 1] = v
                 CompFortConexas.__dfs_visit_cfc(G, u, C, T, A, F, tempo)
+                tempo = F[u-1]
         
         tempo += 1
         F[v - 1] = tempo
