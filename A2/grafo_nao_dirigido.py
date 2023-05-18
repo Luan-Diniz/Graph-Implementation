@@ -15,22 +15,22 @@ class GrafoNaoDirigido(Grafo):
     
     def grau(self, v: int) -> int:
         grau = 0
-        for j in range(v-1):
-            if self._matriz[v-1][j] > 0:
+        for i in range(v-1):
+            if self._matriz[i][v-1] > 0:
                 grau += 1
-        for i in range(v, self._quantidade_vertices):
-            if self._matriz[i][v-1]:
+        for j in range(v, self._quantidade_vertices):
+            if self._matriz[v-1][j]:
                 grau += 1
         return grau
 
     def vizinhos(self, v: int) -> list:
         vizinhos = []
-        for j in range(v-1):
-            if self._matriz[v-1][j] > 0:
-                vizinhos.append(j+1)
-        for i in range(v, self._quantidade_vertices):
-            if self._matriz[i][v-1]:
+        for i in range(v-1):
+            if self._matriz[i][v-1] > 0:
                 vizinhos.append(i+1)
+        for j in range(v, self._quantidade_vertices):
+            if self._matriz[v-1][j]:
+                vizinhos.append(j+1)
         return vizinhos
 
     def ha_aresta(self, u: int, v: int) -> bool:
@@ -42,26 +42,19 @@ class GrafoNaoDirigido(Grafo):
     
     def ordernar_vertices(self, u: int, v: int) -> tuple:
         if (u < v):
-            return(v, u)
-        else:
             return(u, v)
+        else:
+            return(v, u)
     
     def get_arestas(self) -> list:
-        if len(self.__lista_arestas) == 0:
-            num_vertices = self.qtdVertices()
-            for i in range(1, num_vertices):
-                for j in range(0, i):
-                    if self._matriz[i][j] != 0:
-                        self.__lista_arestas.append((i+1,j+1))
         return self.__lista_arestas
     
     def get_arestas_duplicadas(self) -> list:
         if len(self.__lista_arestas_duplicado) == 0:
-            num_vertices = self.qtdVertices()
-            for i in range(1,num_vertices + 1):
-                for j in range(1,num_vertices + 1):
-                    if self.haAresta(i,j):
-                        self.__lista_arestas_duplicado.append((i,j))
+            for u,v in self.__lista_arestas:
+                self.__lista_arestas_duplicado.append((u,v))
+                self.__lista_arestas_duplicado.append((v,u))
+            self.__lista_arestas_duplicado.sort()
         return self.__lista_arestas_duplicado
     
     def peso(self, u: int, v: int) -> float:
@@ -89,4 +82,6 @@ class GrafoNaoDirigido(Grafo):
                 v = int(linha[1])
                 u, v = self.ordernar_vertices(u, v)
                 self._matriz[u-1][v-1] = float(linha[2])
+                self.__lista_arestas.append((u, v))
                 self.__quantidade_arestas += 1
+        self.__lista_arestas.sort()

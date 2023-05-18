@@ -50,12 +50,6 @@ class GrafoDirigido(Grafo):
         return ha_arco
     
     def get_arcos(self) -> list:
-        if len(self.__lista_arcos) == 0:
-            num_vertices = self.qtd_vertices()
-            for i in range(1, num_vertices + 1):
-                for j in range(1, num_vertices + 1):
-                    if self._matriz[i-1][j-1] != 0:
-                        self.__lista_arcos.append((i,j))
         return self.__lista_arcos
     
     def peso(self, u: int, v: int) -> float:
@@ -81,7 +75,9 @@ class GrafoDirigido(Grafo):
                 u = int(linha[0])
                 v = int(linha[1])
                 self._matriz[u-1][v-1] = float(linha[2])
+                self.__lista_arcos.append((u, v))
                 self.__quantidade_arcos += 1
+        self.__lista_arcos.sort()
                 
     def __criar_grafo_transposto(self, grafo: 'GrafoDirigido'):
         self._quantidade_vertices = grafo.qtd_vertices()
