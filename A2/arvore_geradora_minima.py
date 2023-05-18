@@ -22,14 +22,14 @@ class Prim:
         
         Q = [True for _ in range(numero_vertices)]
 
-        while Q != []:
+        while True in Q:
             minimo = float('inf')
             u = int     #vértice com K mínimo e que é candidato a entrar na árvore
             for i in range(0, numero_vertices):
                 if Q[i] == True and K[i] < minimo:
                     minimo = K[i]
                     u = i + 1       #u é o "vértice mínimo"
-
+        
             Q[u - 1] = False    #u entrará na árvore
 
             for v in G.vizinhos(u):
