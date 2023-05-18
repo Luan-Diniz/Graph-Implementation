@@ -7,10 +7,25 @@ class Prim:
         G = GrafoNaoDirigido(nome_arquivo)
         A = Prim.prim(G)
 
-        #O print não é o que deve ser feito.
-        print(A)
+        arestas = []
+        for vertice, antecessor in enumerate(A, 1):
+            if antecessor != None:
+                arestas.append((vertice, antecessor))
+        peso_total = 0
+        for u,v in arestas:
+            peso_total += G.peso(u,v)
         #Deve printar uma linha com a soma do peso das arestas
-        #Deve printar outra linha com as arestas que estao na árvore geradora
+        print(peso_total)
+   
+        #E printar outra linha com as arestas que estao na árvore geradora
+        for verifica_se_ultima, aresta in enumerate(arestas,1):
+            aresta_formatada = str(aresta).replace(",", "-").replace("(","").replace(")","").replace(" ","")
+
+            if verifica_se_ultima == len(arestas):
+                print(aresta_formatada)
+            else:
+                print(aresta_formatada, end = ", ")
+        
 
     @staticmethod
     def prim(G: GrafoNaoDirigido) -> list:
