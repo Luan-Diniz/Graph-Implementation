@@ -10,9 +10,24 @@ class CompFortConexas:
         Gt = G.criar_grafo_transposto()
 
         Ct, Tt, At, Ft = CompFortConexas.__dfs_para_cfc(Gt, alterado=True, F_anterior=F)
+
+        floresta = [[] for arvore in range(At.count(None))]
         
-        print(At)
-        
+        i = 0
+        for filho, pai in enumerate(At):
+            if pai == None:
+                floresta[i].append(filho + 1)
+                filho1 = filho + 1
+                while(filho1 in At):
+                    for neto, filho2 in enumerate(At):
+                        if filho2 == filho1:
+                            floresta[i].append(neto + 1)
+                            filho1 = neto + 1
+                i += 1
+
+        for arvore in floresta:
+            print(str(arvore).replace("[", "").replace("]","").replace(" ",""))
+
     @staticmethod
     def __dfs_para_cfc(G: GrafoDirigido, alterado: bool=False, F_anterior: list= None):
 
