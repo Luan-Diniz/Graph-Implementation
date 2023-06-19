@@ -37,7 +37,6 @@ class TodosCaminhosMinimos:
 
 if __name__ == "__main__":
     import sys
-    
     quantidade_args = len(sys.argv)
     if quantidade_args != 2:
         print("1 argumentos necessários: nome_arquivo")
