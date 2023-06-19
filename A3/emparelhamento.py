@@ -2,7 +2,7 @@ from grafo_nao_dirigido import GrafoNaoDirigido
 
 class Emparelhamento:
     @staticmethod
-    def hopcroft_karp(nome_arquivo: str, s: int, t: int, Gf: str):
+    def hopcroft_karp(nome_arquivo: str):
         G = GrafoNaoDirigido(nome_arquivo)
 
         D = [float('inf') for _ in range(G.qtd_vertices())]
