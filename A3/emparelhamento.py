@@ -11,7 +11,7 @@ class Emparelhamento:
 
         m = 0
 
-        while(Emparelhamento.bfs(G, mate, D) == True):
+        while(Emparelhamento.bfs(G, mate, D)):
             for x in G.X: # O conjunto X precisa ser implementado
                 if(mate[x - 1] == None):
                     if(Emparelhamento.dfs(G, mate, x, D)):
@@ -46,7 +46,7 @@ class Emparelhamento:
         if (x != None):
             for y in G.vizinhos(x):
                 if(D[mate[y - 1]] == D[x - 1] + 1): # Precisa verficar essa notação
-                    if(Emparelhamento.dfs(G, mate, mate[y - 1], D) == True):
+                    if(Emparelhamento.dfs(G, mate, mate[y - 1], D)):
                         mate[x - 1] = y
                         mate[y - 1] = x
                         return True
