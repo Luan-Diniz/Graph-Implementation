@@ -25,6 +25,7 @@ class FluxoMaximo:
                         while(w != s):
                             w = A[w - 1]
                             p.append(w)
+                        return p
                     Q.append(v)
         return None
 
