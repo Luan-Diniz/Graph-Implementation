@@ -19,7 +19,7 @@ class Emparelhamento:
         return m, mate
 
     @staticmethod
-    def bfs(self, G, mate, D):
+    def bfs(G, mate, D):
         Q = []
 
         for x in G.X: # O conjunto X precisa ser implementado
@@ -42,7 +42,7 @@ class Emparelhamento:
         return Dnull != float('inf')
 
     @staticmethod
-    def dfs(self, G, mate, x, D):
+    def dfs(G, mate, x, D):
         if (x != None):
             for y in G.vizinhos(x):
                 if(D[mate[y - 1]] == D[x - 1] + 1): # Precisa verficar essa notação

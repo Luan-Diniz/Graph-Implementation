@@ -16,7 +16,7 @@ class FluxoMaximo:
         while(Q != []):
             u = Q.pop(0)
             for v in G.vizinhos_sucessores(u):
-                if(C[v - 1] == False and G.ha_arco(u, v)): # Pode não ser "ha_arco()"
+                if(C[v - 1] == False and G.peso(u, v) > 0): # Pode não ser "peso()"
                     C[v - 1] = True
                     A[v - 1] = u
                     if(v == t):

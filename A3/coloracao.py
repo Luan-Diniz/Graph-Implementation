@@ -15,23 +15,23 @@ class Coloracao:
             s = Coloracao.f(S) # Implementar f()
             X[s - 1] = float('inf')
             Gi = None # Tbm não entendi
-            for i in Coloracao.I(Gi): # Implementar I()
-                i = Coloracao.f() # Preciso ler a apostila kkkkkkkk
+            for I in Coloracao.lcim(Gi): # Implementar I(), ou melhor, lcim()
+                i = Coloracao.f(S - I) # Implementar f()
                 if(X[i - 1] + 1 < X[s - 1]):
                     X[s - 1] = X[i - 1] + 1
         
         return X[2**G.qtd_vertices() - 1]
 
     @staticmethod
-    def f(self):
+    def f(S):
         pass
 
     @staticmethod
-    def I(self):
-        pass
+    def lcim(G) -> list: # Retorna uma lista com os Conjuntos Independentes Maximais de um grafo
+        return [] # Precisa implementar
 
     @staticmethod
-    def opt(self):
+    def opt():
         pass
 
 
