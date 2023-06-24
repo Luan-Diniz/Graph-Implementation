@@ -28,7 +28,18 @@ class Coloracao:
 
     @staticmethod
     def lcim(G) -> list: # Retorna uma lista com os Conjuntos Independentes Maximais de um grafo
-        return [] # Precisa implementar
+        S = 2**G.qtd_vertices()
+        R = []
+        for X in S:
+            c = True
+            for v in X:
+                for u in X:
+                    if (G.ha_aresta(u, v)) :
+                        c = False
+                        break
+            if (c) :
+                R.append(X)
+        return R
 
     @staticmethod
     def opt():
