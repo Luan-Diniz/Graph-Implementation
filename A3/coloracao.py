@@ -3,55 +3,51 @@ from itertools import chain, combinations
 
 class Coloracao:
     @staticmethod
-    def lawler(nome_arquivo: str):
+    def printa_resultado(nome_arquivo: str):
+        numero_cores, vertices_coloridos = Coloracao.welsh_powell(nome_arquivo)
+        print(f"Número de Cores: {numero_cores}")
+
+        for i in range(1, len(vertices_coloridos) + 1):
+            print(f"\tO vértice {i} tem cor {vertices_coloridos[i-1]}")
+
+
+    @staticmethod
+    def welsh_powell(nome_arquivo: str):
         G = GrafoNaoDirigido(nome_arquivo)
+        graus =  [i + 1 for i in range(0, G.qtd_vertices())]
 
-        X = [i for i in range(2**G.qtd_vertices())]
+        # As cores serao representadas por números inteiros, começando por 1.
+        coloracao = [0 for i in range(0, G.qtd_vertices())]
 
-        X[0] = 0
+        #Lista decrescente dos vértices baseados em seu grau.
+        graus.sort(key=G.grau, reverse=True)  
 
-        cp = Coloracao.conjunto_potencia(G.get_arestas)
+        index = int
+        cor = 0 
+        #Enquanto houver algum vertice sem cor
+        while 0 in coloracao:
+            for i in graus:
+                if coloracao[i - 1] == 0:
+                    cor += 1
+                    coloracao[i - 1] = cor
+                    index = i     #Agora temos o vertice com maior grau sem cor ainda
+                    break  
+            
+            for i in graus:
+                if i == index:
+                    continue
+                #Os vertices nao conectados ao vertice de numero index recebem a mesma cor que ele
+                elif (not G.ha_aresta(i, index)):
+                    coloracao[i - 1] = cor
 
-        for S in cp.remove(tuple(())):
-            s = Coloracao.f(S) # Implementar f()
-            X[s - 1] = float('inf')
-            Gi = (S, set(cp).union(set(G.get_arestas())))
-            for I in Coloracao.conjuntos_independentes_maximais(Gi):
-                i = Coloracao.f(S.remove(I)) # Implementar f()
-                if(X[i - 1] + 1 < X[s - 1]):
-                    X[s - 1] = X[i - 1] + 1
-        
-        return X[2**G.qtd_vertices() - 1]
+        return (cor, coloracao)
 
-    @staticmethod
-    def f(S: list) -> int:
-        return 0
 
-    @staticmethod
-    def opt() -> int:
-        return 0
 
-    @staticmethod
-    def conjuntos_independentes_maximais(G: GrafoNaoDirigido) -> list:
-        S = Coloracao.conjunto_potencia(G.get_arestas()).reverse()
-        R = []
-        for X in S:
-            c = True
-            for v in X:
-                for u in X:
-                    if (G.ha_aresta(u, v)) :
-                        c = False
-                        break
-            if (c) :
-                R.append(X)
-        return R
 
-    @staticmethod
-    def conjunto_potencia(lista: list) -> list:
-        # "lista_potencia" é uma lista de todas as combinações de elementos de "lista" com exceção do elemento vazio
-        # "combinations(list, size)" retorna uma lista com todas as combinações de tamanho "size" na lista "list"
-        lista_potencia = list(chain.from_iterable(combinations(lista, tamanho) for tamanho in range(len(lista) + 1)))
-        return lista_potencia
+        print(graus)
+        #return ;
+
 
 
 
@@ -61,4 +57,4 @@ if __name__ == "__main__":
     if quantidade_args != 2:
         print("1 argumento necessário: nome_arquivo")
     else:
-        Coloracao.lawler(sys.argv[1])
+        Coloracao.printa_resultado(sys.argv[1])
