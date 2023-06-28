@@ -1,4 +1,5 @@
 from grafo_nao_dirigido import GrafoNaoDirigido
+from itertools import chain, combinations
 
 class Coloracao:
     @staticmethod
@@ -9,26 +10,30 @@ class Coloracao:
 
         X[0] = 0
 
-        S = 2**G.qtd_vertices()
+        cp = Coloracao.conjunto_potencia(G.get_arestas)
 
-        for s in []: # Não entendi kkkkkkk
+        for S in cp.remove(tuple(())):
             s = Coloracao.f(S) # Implementar f()
             X[s - 1] = float('inf')
-            Gi = None # Tbm não entendi
-            for I in Coloracao.lcim(Gi): # Implementar I(), ou melhor, lcim()
-                i = Coloracao.f(S - I) # Implementar f()
+            Gi = (S, set(cp).union(set(G.get_arestas())))
+            for I in Coloracao.conjuntos_independentes_maximais(Gi):
+                i = Coloracao.f(S.remove(I)) # Implementar f()
                 if(X[i - 1] + 1 < X[s - 1]):
                     X[s - 1] = X[i - 1] + 1
         
         return X[2**G.qtd_vertices() - 1]
 
     @staticmethod
-    def f(S):
-        pass
+    def f(S: list) -> int:
+        return 0
 
     @staticmethod
-    def lcim(G) -> list: # Retorna uma lista com os Conjuntos Independentes Maximais de um grafo
-        S = 2**G.qtd_vertices()
+    def opt() -> int:
+        return 0
+
+    @staticmethod
+    def conjuntos_independentes_maximais(G: GrafoNaoDirigido) -> list:
+        S = Coloracao.conjunto_potencia(G.get_arestas()).reverse()
         R = []
         for X in S:
             c = True
@@ -42,8 +47,11 @@ class Coloracao:
         return R
 
     @staticmethod
-    def opt():
-        pass
+    def conjunto_potencia(lista: list) -> list:
+        # "lista_potencia" é uma lista de todas as combinações de elementos de "lista" com exceção do elemento vazio
+        # "combinations(list, size)" retorna uma lista com todas as combinações de tamanho "size" na lista "list"
+        lista_potencia = chain.from_iterable(combinations(lista, tamanho) for tamanho in range(len(lista) + 1))
+        return lista_potencia
 
 
 

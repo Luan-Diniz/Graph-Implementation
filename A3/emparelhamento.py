@@ -35,7 +35,7 @@ class Emparelhamento:
             x = Q.pop(0)
             if(D[x - 1] < Dnull):
                 for y in G.vizinhos(x):
-                    if(D[mate[y - 1]] == float('inf')): # Precisa verficar essa notação
+                    if(D[mate[y - 1]] == float('inf')):
                         D[mate[y - 1]] = D[x - 1] + 1
                         Q.append(mate[y - 1])
         
@@ -45,7 +45,7 @@ class Emparelhamento:
     def dfs(G, mate, x, D):
         if (x != None):
             for y in G.vizinhos(x):
-                if(D[mate[y - 1]] == D[x - 1] + 1): # Precisa verficar essa notação
+                if(D[mate[y - 1]] == D[x - 1] + 1):
                     if(Emparelhamento.dfs(G, mate, mate[y - 1], D)):
                         mate[x - 1] = y
                         mate[y - 1] = x

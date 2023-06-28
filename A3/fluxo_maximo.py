@@ -2,8 +2,10 @@ from grafo_dirigido import GrafoDirigido
 
 class FluxoMaximo:
     @staticmethod
-    def edmonds_karp(nome_arquivo: str, s: int, t: int, Gf: str): # Gf precisa ser implementado
+    def edmonds_karp(nome_arquivo: str, s: int, t: int):
         G = GrafoDirigido(nome_arquivo)
+
+        Gf = G.criar_rede_residual() # Gf precisa ser implementado
 
         C = [False for _ in range(G.qtd_vertices())]
 
@@ -16,7 +18,7 @@ class FluxoMaximo:
         while(Q != []):
             u = Q.pop(0)
             for v in G.vizinhos_sucessores(u):
-                if(C[v - 1] == False and G.peso(u, v) > 0): # Pode não ser "peso()"
+                if(C[v - 1] == False and Gf.peso(u, v) > 0): # Gf precisa ser implementado
                     C[v - 1] = True
                     A[v - 1] = u
                     if(v == t):
@@ -34,7 +36,7 @@ class FluxoMaximo:
 if __name__ == "__main__":
     import sys
     quantidade_args = len(sys.argv)
-    if quantidade_args != 5:
-        print("4 argumentos necessários: nome_arquivo, vétice fonte, vértice sorvedouro e rede residual")
+    if quantidade_args != 4:
+        print("3 argumentos necessários: nome_arquivo, vétice fonte e vértice sorvedouro")
     else:
-        FluxoMaximo.edmonds_karp(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+        FluxoMaximo.edmonds_karp(sys.argv[1], sys.argv[2], sys.argv[3])
