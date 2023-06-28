@@ -50,7 +50,7 @@ class Coloracao:
     def conjunto_potencia(lista: list) -> list:
         # "lista_potencia" é uma lista de todas as combinações de elementos de "lista" com exceção do elemento vazio
         # "combinations(list, size)" retorna uma lista com todas as combinações de tamanho "size" na lista "list"
-        lista_potencia = chain.from_iterable(combinations(lista, tamanho) for tamanho in range(len(lista) + 1))
+        lista_potencia = list(chain.from_iterable(combinations(lista, tamanho) for tamanho in range(len(lista) + 1)))
         return lista_potencia
 
 
