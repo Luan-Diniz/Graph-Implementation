@@ -45,12 +45,6 @@ class Coloracao:
 
 
 
-        print(graus)
-        #return ;
-
-
-
-
 if __name__ == "__main__":
     import sys
     quantidade_args = len(sys.argv)
