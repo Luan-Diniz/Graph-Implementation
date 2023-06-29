@@ -12,17 +12,25 @@ class Emparelhamento:
         m = 0
 
         while(Emparelhamento.bfs(G, mate, D)):
-            for x in G.X: # O conjunto X precisa ser implementado
+            for x in G.X():
                 if(mate[x - 1] == None):
                     if(Emparelhamento.dfs(G, mate, x, D)):
                         m += 1
-        return m, mate
-
+        
+        i = 0
+        print("\nEmparelhamento máximo = ", m, end = ".\n")
+        print("Arestas do emparelhamento = ", end = "")
+        for aresta in mate:
+            if(i != len(mate) - 1):
+                print(aresta, end = ", ")
+            else:
+                print(aresta, end = ".\n\n")
+            i += 1
     @staticmethod
     def bfs(G, mate, D):
         Q = []
 
-        for x in G.X: # O conjunto X precisa ser implementado
+        for x in G.X():
             if (mate[x - 1] == None):
                 D[x - 1] = 0
                 Q.append(x)
@@ -35,9 +43,10 @@ class Emparelhamento:
             x = Q.pop(0)
             if(D[x - 1] < Dnull):
                 for y in G.vizinhos(x):
-                    if(D[mate[y - 1]] == float('inf')):
-                        D[mate[y - 1]] = D[x - 1] + 1
-                        Q.append(mate[y - 1])
+                    if(mate[y - 1] != None):
+                        if(D[mate[y - 1]] == float('inf')):
+                            D[mate[y - 1]] = D[x - 1] + 1
+                            Q.append(mate[y - 1])
         
         return Dnull != float('inf')
 
@@ -45,11 +54,12 @@ class Emparelhamento:
     def dfs(G, mate, x, D):
         if (x != None):
             for y in G.vizinhos(x):
-                if(D[mate[y - 1]] == D[x - 1] + 1):
-                    if(Emparelhamento.dfs(G, mate, mate[y - 1], D)):
-                        mate[x - 1] = y
-                        mate[y - 1] = x
-                        return True
+                if (mate[y - 1] != None):
+                    if(D[mate[y - 1]] == D[x - 1] + 1):
+                        if(Emparelhamento.dfs(G, mate, mate[y - 1], D)):
+                            mate[x - 1] = y
+                            mate[y - 1] = x
+                            return True
             D[x - 1] = float('inf')
             return False
         return True

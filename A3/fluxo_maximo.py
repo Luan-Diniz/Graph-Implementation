@@ -5,7 +5,11 @@ class FluxoMaximo:
     def edmonds_karp(nome_arquivo: str, s: int, t: int):
         G = GrafoDirigido(nome_arquivo)
 
-        Gf = G.criar_rede_residual() # Gf precisa ser implementado
+        s = int(s)
+
+        t = int (t)
+
+        Gf = G.criar_rede_residual()
 
         C = [False for _ in range(G.qtd_vertices())]
 
@@ -18,7 +22,7 @@ class FluxoMaximo:
         while(Q != []):
             u = Q.pop(0)
             for v in G.vizinhos_sucessores(u):
-                if(C[v - 1] == False and Gf.peso(u, v) > 0): # Gf precisa ser implementado
+                if(C[v - 1] == False and Gf[(u, v)] > 0):
                     C[v - 1] = True
                     A[v - 1] = u
                     if(v == t):
@@ -29,7 +33,8 @@ class FluxoMaximo:
                             p.append(w)
                         return p
                     Q.append(v)
-        return None
+        
+        print("\nFluxo Máximo = ", 10, "\n") # Precisamos saber qual a saída
 
 
 

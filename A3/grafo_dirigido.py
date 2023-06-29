@@ -95,3 +95,20 @@ class GrafoDirigido(Grafo):
     def criar_grafo_transposto(self):
         return GrafoDirigido(self)
     
+    def fluxo(self, v):
+        maior = float("inf")
+        for i in range(1, self._quantidade_vertices + 1):
+            if self._matriz[i-1][v-1] > 0 and self._matriz[i-1][v-1] < maior:
+                maior = self._matriz[i-1][v-1]
+        return maior
+
+    def criar_rede_residual(self):
+        rede = {}
+        for (u, v) in self.__lista_arcos:
+            rede[u, v] = self.peso(u, v) - self.fluxo(u)
+            if (v, u) in self.__lista_arcos:
+                rede[v, u] = self.peso(v, u)
+            else:
+                rede[v, u] = 0
+
+    

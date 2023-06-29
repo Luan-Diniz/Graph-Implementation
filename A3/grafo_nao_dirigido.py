@@ -85,3 +85,15 @@ class GrafoNaoDirigido(Grafo):
                 self.__lista_arestas.append((u, v))
                 self.__quantidade_arestas += 1
         self.__lista_arestas.sort()
+
+    def X(self):
+        x = []
+        for aresta in self.__lista_arestas:
+            x.append(aresta[0])
+        return list(dict.fromkeys(x))
+    
+    def Y(self):
+        y = []
+        for aresta in self.__lista_arestas:
+            y.append(aresta[1])
+        return list(dict.fromkeys(y))
