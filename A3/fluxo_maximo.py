@@ -18,6 +18,7 @@ class FluxoMaximo:
 
         while (p != None) :
             fp = float("inf")
+
             for (u, v) in p:
                 if(Gf[u, v] < fp):
                     fp = Gf[u, v]
@@ -40,9 +41,13 @@ class FluxoMaximo:
 
         Q = [s]
 
+
+        
+
         while(Q != []):
             u = Q.pop(0)
             for v in G.vizinhos_sucessores(u):
+                
                 if(C[v - 1] == False and Gf[(u, v)] > 0):
                     C[v - 1] = True
                     A[v - 1] = u
@@ -52,6 +57,7 @@ class FluxoMaximo:
                         while(w != s):
                             w = A[w - 1]
                             p.append(w)
+                        
                         return p
                     Q.append(v)
         return None
