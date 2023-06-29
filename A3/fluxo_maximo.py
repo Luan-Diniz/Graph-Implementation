@@ -17,16 +17,19 @@ class FluxoMaximo:
         p = FluxoMaximo.bfs(G, s, t, Gf)
 
         while (p != None) :
+            print("\np anterior =", p)
             fp = float("inf")
-
-            for (u, v) in p:
-                if(Gf[u, v] < fp):
-                    fp = Gf[u, v]
+            for i in range(len(p) - 1):
+                if(Gf[p[i], p[i + 1]] < fp):
+                    fp = Gf[p[i], p[i + 1]]
             F += fp
-            for (u, v) in p:
-                Gf[u, v] -= fp
-                Gf[v, u] += fp
+            for i in range(len(p) - 1):
+                Gf[p[i], p[i + 1]] -= fp
+                Gf[p[i + 1], p[i]] += fp
             p = FluxoMaximo.bfs(G, s, t, Gf)
+            print("p atual =", p)
+            print("fp =", fp)
+            break # Como fp == 0, o caminho p não muda e gera um loop infinito
         
         print("\nFluxo Máximo:", F, "\n")
 
@@ -41,14 +44,11 @@ class FluxoMaximo:
 
         Q = [s]
 
-
-        
-
         while(Q != []):
             u = Q.pop(0)
             for v in G.vizinhos_sucessores(u):
                 
-                if(C[v - 1] == False and Gf[(u, v)] > 0):
+                if(C[v - 1] == False and Gf[u, v] > 0):
                     C[v - 1] = True
                     A[v - 1] = u
                     if(v == t):
@@ -57,7 +57,6 @@ class FluxoMaximo:
                         while(w != s):
                             w = A[w - 1]
                             p.append(w)
-                        
                         return p
                     Q.append(v)
         return None

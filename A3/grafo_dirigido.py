@@ -109,11 +109,8 @@ class GrafoDirigido(Grafo):
         for u in range(1, self._quantidade_vertices + 1):
             for v in range(1, self._quantidade_vertices + 1):
                 rede[u,v] = 0
-
         for (u,v) in self.__lista_arcos:
-            rede[u, v] = self.fluxo(u)
-    
-       
+            rede[u, v] = self.peso(u, v)
         return rede
 
     
