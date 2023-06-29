@@ -96,19 +96,24 @@ class GrafoDirigido(Grafo):
         return GrafoDirigido(self)
     
     def fluxo(self, v):
-        maior = float("inf")
-        for i in range(1, self._quantidade_vertices + 1):
-            if self._matriz[i-1][v-1] > 0 and self._matriz[i-1][v-1] < maior:
-                maior = self._matriz[i-1][v-1]
-        return maior
+        entrante = 0
+        for u in self.vizinhos_antecessores(v):
+            entrante +=  self.peso(u, v)
+        sainte = 0
+        for u in self.vizinhos_sucessores(v):
+            sainte += self.peso(v, u)
+        return sainte - entrante
 
     def criar_rede_residual(self):
         rede = {}
-        for (u, v) in self.__lista_arcos:
-            rede[u, v] = self.peso(u, v) - self.fluxo(u)
-            if (v, u) in self.__lista_arcos:
-                rede[v, u] = self.peso(v, u)
-            else:
-                rede[v, u] = 0
+        for u in range(1, self._quantidade_vertices + 1):
+            for v in range(1, self._quantidade_vertices + 1):
+                if (u, v) in self.__lista_arcos:
+                    rede[u, v] = self.fluxo(u)
+                    rede[v, u] = 0
+                else:
+                    rede[u, v] = 0
+                    rede[v, u] = 0
+        return rede
 
     

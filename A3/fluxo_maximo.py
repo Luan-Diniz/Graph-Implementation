@@ -1,6 +1,7 @@
 from grafo_dirigido import GrafoDirigido
 
 class FluxoMaximo:
+
     @staticmethod
     def edmonds_karp(nome_arquivo: str, s: int, t: int):
         G = GrafoDirigido(nome_arquivo)
@@ -11,6 +12,26 @@ class FluxoMaximo:
 
         Gf = G.criar_rede_residual()
 
+        F = 0
+
+        p = FluxoMaximo.bfs(G, s, t, Gf)
+
+        while (p != None) :
+            fp = float("inf")
+            for (u, v) in p:
+                if(Gf[u, v] < fp):
+                    fp = Gf[u, v]
+            F += fp
+            for (u, v) in p:
+                Gf[u, v] -= fp
+                Gf[v, u] += fp
+            p = FluxoMaximo.bfs(G, s, t, Gf)
+        
+        print("\nFluxo Máximo:", F, "\n")
+
+
+    @staticmethod
+    def bfs(G: GrafoDirigido, s: int, t: int, Gf: dict):
         C = [False for _ in range(G.qtd_vertices())]
 
         A = [None for _ in range(G.qtd_vertices())]
@@ -33,8 +54,7 @@ class FluxoMaximo:
                             p.append(w)
                         return p
                     Q.append(v)
-        
-        print("\nFluxo Máximo = ", 10, "\n") # Precisamos saber qual a saída
+        return None
 
 
 
