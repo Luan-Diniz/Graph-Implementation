@@ -5,62 +5,63 @@ class Emparelhamento:
     def hopcroft_karp(nome_arquivo: str):
         G = GrafoNaoDirigido(nome_arquivo)
 
-        D = [float('inf') for _ in range(G.qtd_vertices())]
+        D = [float('inf') for _ in range(G.qtd_vertices() + 1)]
 
-        mate = [None for _ in range(G.qtd_vertices())]
+        mate = [0 for _ in range(G.qtd_vertices() + 1)]
 
         m = 0
 
         while(Emparelhamento.bfs(G, mate, D)):
             for x in G.X():
-                if(mate[x - 1] == None):
+                if(mate[x] == 0):
                     if(Emparelhamento.dfs(G, mate, x, D)):
                         m += 1
         
         i = 0
-        print("\nEmparelhamento máximo = ", m, end = ".\n")
-        print("Arestas do emparelhamento = ", end = "")
-        for aresta in mate:
-            if(i != len(mate) - 1):
-                print(aresta, end = ", ")
-            else:
-                print(aresta, end = ".\n\n")
-            i += 1
+        emparelhamento = []
+        for u, v in G.get_arestas():
+            if mate[u] == v:
+                if u < v:
+                    emparelhamento.append((u,v))
+                else:
+                    emparelhamento.append((v,u))
+            
+        print("\nEmparelhamento máximo = ", m, "\n")
+        print("Arestas do emparelhamento = ", str(emparelhamento).replace("[", "").replace("]", "").replace("),", ")"), "\n")
+        
     @staticmethod
     def bfs(G, mate, D):
         Q = []
 
         for x in G.X():
-            if (mate[x - 1] == None):
-                D[x - 1] = 0
+            if (mate[x] == 0):
+                D[x] = 0
                 Q.append(x)
             else:
-                D[x - 1] = float('inf')
+                D[x] = float('inf')
         
-        Dnull = float('inf')
+        D[0] = float('inf')
 
         while(Q != []):
             x = Q.pop(0)
-            if(D[x - 1] < Dnull):
+            if(D[x] < D[0]):
                 for y in G.vizinhos(x):
-                    if(mate[y - 1] != None):
-                        if(D[mate[y - 1]] == float('inf')):
-                            D[mate[y - 1]] = D[x - 1] + 1
-                            Q.append(mate[y - 1])
+                    if (D[mate[y]] == float('inf')):
+                        D[mate[y]] = D[x] + 1
+                        Q.append(mate[y])
         
-        return Dnull != float('inf')
+        return D[0] != float('inf')
 
     @staticmethod
     def dfs(G, mate, x, D):
-        if (x != None):
+        if (x != 0):
             for y in G.vizinhos(x):
-                if (mate[y - 1] != None):
-                    if(D[mate[y - 1]] == D[x - 1] + 1):
-                        if(Emparelhamento.dfs(G, mate, mate[y - 1], D)):
-                            mate[x - 1] = y
-                            mate[y - 1] = x
-                            return True
-            D[x - 1] = float('inf')
+                if(D[mate[y]] == D[x] + 1):
+                    if(Emparelhamento.dfs(G, mate, mate[y], D)):
+                        mate[x] = y
+                        mate[y] = x
+                        return True
+            D[x] = float('inf')
             return False
         return True
 
